@@ -18,7 +18,7 @@ function attack(charHealthpoint, defenderHealthpoint) {
   }
 
   if (charHealthpoint <= 0) {
-    $("#defenderSection").append("You Lost!!!").append("<button>Restart</button>").addClass("restrtBtn");
+    $("#defenderSection").text("You Lost!!!").append("<button>Restart</button>").addClass("restrtBtn");
     $(".restrtBtn").on("click", function () {
       location.reload();
     });
@@ -27,16 +27,25 @@ function attack(charHealthpoint, defenderHealthpoint) {
 
   if (defenderHealthpoint <= 0) {
     $("#defenderSection").find(".char").remove();
-    $("#defenderSection").append("You defeated the defender! His points are" + defenderHealthpoint +"health points"+"\n" );
+    $("#defenderSection").text("You defeated the defender! His points are" + defenderHealthpoint +"health points"+"\n" );
     $("#defenderSection").append("choose next defender");
     $(".enemy").on("click", enemyClick);
 
   }
   if(charHealthpoint <= 0 && defenderHealthpoint <= 0){
-    $("#defenderSection").append("Health points for both are under zero,power nullified").append("<button>Restart</button>").addClass("restrtBtn");
+    $("#defenderSection").text("Health points for both are under zero,power nullified").append("<button>Restart</button>").addClass("restrtBtn");
     $(".restrtBtn").on("click", function () {
       location.reload();
 
+  });
+
+
+}
+if(($("#enemiesDiv").find(".enemy").length==0 )&& ($("#defenderSection").find(".enemy").length==0) && ($("#imgDiv").find(".char").length<4)){
+  $("#defenderSection").empty();
+  $("#defenderSection").append("You won by defeating all enemies!!!Do you like to start again? ").append("<button>Restart</button>").addClass("restrtBtn");
+  $(".restrtBtn").on("click", function () {
+    location.reload();
   });
 
 
@@ -63,19 +72,10 @@ function enemyClick() {
   defender.css({ 'background-color': 'black', 'color': 'white', 'border': ' solid 1px rgb(88, 218, 88)' });
 }
 $("#fightBtn").on("click", function (event) {
-  if(($("#enemiesDiv").find(".enemy").length==0 )&& ($("#defenderSection").find(".enemy").length==0)){
-    $("#defenderSection").empty();
-    $("#defenderSection").append("You won by defeating all enemies!!!Do you like to start again? ").append("<button>Restart</button>").addClass("restrtBtn");
-    $(".restrtBtn").on("click", function () {
-      location.reload();
-    });
-
-
-  }else{
   var charHealthpoint = parseInt($("#yourCharDiv").find(".point").text());
   var defenderHealthpoint = parseInt($("#defenderSection").find(".point").text());
   attack(charHealthpoint, defenderHealthpoint);
-  }
+  
 });
 
 
